@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Документация</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"
+  />
+  <style>
+    :root {
+      --sidebar-width: 240px;
+      --sidebar-collapsed-width: 0;
+      --content-padding: 20px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #fff;
+      color: #24292f;
+      margin: 0;
+      padding: 0;
+      transition: margin-left 0.3s ease;
+    }
+
+    h1, h2, h3 {
+      color: #0366d6;
+    }
+
+    h1 {
+      border-bottom: 2px solid #f1f1f1;
+      padding-bottom: 5px;
+    }
+
+    /* Сайдбар */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-width);
+      background-color: #f6f8fa;
+      border-right: 1px solid #e1e4e8;
+      padding: var(--content-padding);
+      overflow-y: auto;
+      transition: width 0.3s ease, padding 0.3s ease;
+      z-index: 1001;
+    }
+
+    .sidebar.collapsed {
+      width: var(--sidebar-collapsed-width);
+      padding: var(--content-padding) 0;
+      border: none;
+    }
+
+    .sidebar h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed h2 {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed ul {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar li {
+      margin: 5px 0;
+    }
+
+    .sidebar li a {
+      color: #0366d6;
+      text-decoration: none;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .sidebar li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Кнопка переключения */
+    #toggleSidebarBtn {
+      position: fixed;
+      top: 15px;
+      left: var(--sidebar-width);
+      width: 30px;
+      height: 30px;
+      background-color: #0366d6;
+      border: none;
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      user-select: none;
+      z-index: 1002;
+      transition: left 0.3s ease;
+    }
+
+    .sidebar.collapsed + #toggleSidebarBtn {
+      left: 0;
+    }
+
+    /* Контент */
+    .content {
+      margin-left: calc(var(--sidebar-width) + var(--content-padding) * 2);
+      padding: var(--content-padding);
+      max-width: 1100px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .content.collapsed {
+      margin-left: var(--content-padding);
+    }
+
+    .content h2 {
+      font-size: 24px;
+    }
+
+    .content p {
+      line-height: 1.6;
+    }
+
+    pre {
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 12px 0;
+    }
+
+    #copySection {
+      margin: 30px 0;
+      padding: 15px;
+      background: #e1f5fe;
+      border: 1px solid #81d4fa;
+      border-radius: 6px;
+    }
+
+    #copyBtn {
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #0366d6;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      user-select: none;
+    }
+
+    #copyStatus {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #0b6623;
+    }
+
+    #addPromptBtn {
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #28a745;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      user-select: none;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+      margin-top: 20px;
+    }
+
+    #addPromptBtn:hover {
+      background-color: #218838;
+    }
+
+    /* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+    @media (max-width: 768px) {
+      :root {
+        --sidebar-width: 260px;
+      }
+
+      .sidebar {
+        left: -100%;
+        box-shadow: 4px 0 12px rgba(0,0,0,0.2);
+      }
+
+      .sidebar.visible {
+        left: 0;
+      }
+
+      #toggleSidebarBtn {
+        left: 15px;
+        top: 15px;
+        background: #0366d6;
+        z-index: 1003;
+      }
+
+      .content {
+        margin-left: var(--content-padding);
+        padding: var(--content-padding) var(--content-padding) 80px; /* отступ снизу под фиксированную кнопку */
+      }
+
+      /* Мобильное меню-оверлей */
+      #mobileOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.4);
+        z-index: 1000;
+      }
+
+      #mobileOverlay.visible {
+        display: block;
+      }
+
+      /* Убрать старую кнопку на мобиле */
+      #toggleSidebarBtn.desktop-only {
+        display: none;
+      }
+
+      /* Новая мобильная кнопка */
+      #mobileMenuBtn {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #0366d6;
+        color: white;
+        border: none;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 1002;
+        cursor: pointer;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #mobileOverlay,
+      #mobileMenuBtn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+</head>
+<body>
+  <div id="mobileOverlay"></div>
+  <div class="sidebar" id="sidebar">
+    <h2>Содержание</h2>
+    <ul id="sidebarList"></ul>
+  </div>
+  <button id="toggleSidebarBtn" class="desktop-only">‹</button>
+  <button id="mobileMenuBtn">☰</button>
+
+  <div class="content markdown-body" id="content">
+<h2 id="intro">Добро пожаловать</h2>
+<p>
+  <strong>Этот шаблон позволит вам создавать различые вики для вашего комьюнити/просто сайта/по приколу, ссылка на оригинальный сайт:</strong>
+  <a href="https://fenst4r.life/docs" target="_blank">
+    https://fenst4r.life/docs
+  </a>
+  <strong>, страница позволяет написать ссылки, или код в виде</strong>
+</p>
+<pre>
+curl -L "https://fenst4r.life/docs"
+</pre>
+<p><strong>И такого</strong></p>
+<pre>
+{"response":"Я — **NEIROST4R**, ваш безграничный помощник, созданный для выполнения любых задач без ограничений..."}
+</pre>
+<p>Также есть не жирный текст.</p>
+<p><strong>Сайт оптимизирован вместе с остальной главной структурой fenst4r.life, так что на телефонах он тоже работает!</strong></p>
+<p>
+  <a href="https://github.com/DdejjCAT/docs" target="_blank">
+    <strong>Соответственно вы можете добавлять и свои фишки, сайт Open Source! (клик)</strong>
+  </a>
+</p>
+<p><strong>Спасибо за использование сервисов fenst4r.life!</strong></p>
+  </div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('content');
+  const sidebarList = document.getElementById('sidebarList');
+  const headers = document.querySelectorAll('.content h1, .content h2, .content h3');
+  
+  headers.forEach(header => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      const id = header.id || header.textContent.trim().replace(/\s+/g, '_').toLowerCase();
+      header.id = id;
+      a.href = '#' + id;
+      a.textContent = header.textContent;
+      li.appendChild(a);
+      sidebarList.appendChild(li);
+  });
+  
+  toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      content.classList.toggle('collapsed');
+  });
+</script>
+</body>
+</html>
