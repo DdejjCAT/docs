@@ -309,26 +309,58 @@ curl -L "https://fenst4r.life/docs"
   </div>
 
 <script>
-  const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content');
-  const sidebarList = document.getElementById('sidebarList');
-  const headers = document.querySelectorAll('.content h1, .content h2, .content h3');
-  
-  headers.forEach(header => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      const id = header.id || header.textContent.trim().replace(/\s+/g, '_').toLowerCase();
-      header.id = id;
-      a.href = '#' + id;
-      a.textContent = header.textContent;
-      li.appendChild(a);
-      sidebarList.appendChild(li);
-  });
-  
+// === Генерация содержания (TOC) ===
+const sidebar = document.getElementById('sidebar');
+const content = document.getElementById('content');
+const sidebarList = document.getElementById('sidebarList');
+const headers = document.querySelectorAll('.content h1, .content h2, .content h3');
+
+headers.forEach(header => {
+  const id = header.id || header.textContent.trim().replace(/\s+/g, '_').toLowerCase();
+  header.id = id;
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = '#' + id;
+  a.textContent = header.textContent;
+  li.appendChild(a);
+  sidebarList.appendChild(li);
+});
+
+// === Кнопка для десктопа ===
+const toggleBtn = document.getElementById('toggleSidebarBtn'); // ← ЭТО ОБЯЗАТЕЛЬНО!
+if (toggleBtn) {
   toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      content.classList.toggle('collapsed');
+    sidebar.classList.toggle('collapsed');
+    content.classList.toggle('collapsed');
+    toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '›' : '‹';
   });
+}
+
+// === Мобильное меню ===
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileOverlay = document.getElementById('mobileOverlay');
+
+function toggleMobileSidebar() {
+  const isVisible = sidebar.classList.toggle('visible');
+  mobileOverlay.classList.toggle('visible', isVisible);
+  document.body.style.overflow = isVisible ? 'hidden' : '';
+}
+
+if (mobileMenuBtn) {
+  mobileMenuBtn.addEventListener('click', toggleMobileSidebar);
+}
+if (mobileOverlay) {
+  mobileOverlay.addEventListener('click', toggleMobileSidebar);
+}
+
+// Закрытие при клике на ссылку в сайдбаре
+sidebar?.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') {
+    sidebar.classList.remove('visible');
+    mobileOverlay?.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+});
 </script>
 </body>
 </html>
