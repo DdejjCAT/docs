@@ -194,6 +194,32 @@
       background-color: #218838;
     }
 
+    /* === Адаптивные медиа === */
+    .inline-media-wrapper {
+      margin: 18px 0;
+      display: block;
+      text-align: center;
+    }
+
+    .auto-media {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .auto-media[controls] {
+      display: inline-block;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    @media (max-width: 768px) {
+      .auto-media {
+        border-radius: 12px;
+      }
+    }
+
     /* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
     @media (max-width: 768px) {
       :root {
@@ -218,10 +244,9 @@
 
       .content {
         margin-left: var(--content-padding);
-        padding: var(--content-padding) var(--content-padding) 80px; /* отступ снизу под фиксированную кнопку */
+        padding: var(--content-padding) var(--content-padding) 80px;
       }
 
-      /* Мобильное меню-оверлей */
       #mobileOverlay {
         display: none;
         position: fixed;
@@ -237,12 +262,10 @@
         display: block;
       }
 
-      /* Убрать старую кнопку на мобиле */
       #toggleSidebarBtn.desktop-only {
         display: none;
       }
 
-      /* Новая мобильная кнопка */
       #mobileMenuBtn {
         display: block;
         position: fixed;
@@ -272,104 +295,188 @@
     }
   </style>
 </head>
-</head>
 <body>
   <div id="mobileOverlay"></div>
   <div class="sidebar" id="sidebar">
     <h2>Содержание</h2>
     <ul id="sidebarList"></ul>
-  <p>
-    <a href="https://fenst4r.life/docs" target="_blank" style="font-size: 12px;">
-      Текст с ссылкой
-    </a>
-  </p>
-  <p style="font-size:12px;">
-    Простой текст под содержанием
-  </p>
-</div>
+    <p>
+      <a href="https://fenst4r.life/docs" target="_blank" style="font-size: 12px;">
+        Текст с ссылкой
+      </a>
+    </p>
+    <p style="font-size:12px;">
+      Простой текст под содержанием
+    </p>
+  </div>
 
   <button id="toggleSidebarBtn" class="desktop-only">‹</button>
   <button id="mobileMenuBtn">☰</button>
 
   <div class="content markdown-body" id="content">
-<h2 id="intro">Добро пожаловать</h2>
+    <h2 id="intro">Добро пожаловать</h2>
+    <p>
+      <strong>Этот шаблон позволит вам создавать различные вики для вашего комьюнити/просто сайта/по приколу. Ссылка на оригинальный сайт:</strong>
+      <a href="https://fenst4r.life/docs" target="_blank">https://fenst4r.life/docs</a>.
+      <strong>Вы можете вставлять код, ссылки и даже медиа — фото, видео, аудио — прямо в текст!</strong>
+    </p>
+
+<h2 id="how-to-media">Как вставлять медиа?</h2>
 <p>
-  <strong>Этот шаблон позволит вам создавать различые вики для вашего комьюнити/просто сайта/по приколу, ссылка на оригинальный сайт:</strong>
-  <a href="https://fenst4r.life/docs" target="_blank">
-    https://fenst4r.life/docs
-  </a>
-  <strong>, страница позволяет написать ссылки, или код в виде</strong>
+  Просто напишите в любом абзаце (теге < p >) специальный синтаксис:
 </p>
-<pre>
+<pre>{{image:ссылка.jpg}}</pre>
+<pre>{{video:ссылка.mp4}}</pre>
+<pre>{{audio:ссылка.mp3}}</pre>
+<p>
+  Чтобы задать <strong>ширину</strong> изображения или видео (в пикселях), добавьте параметр <code>|width=значение</code>:
+</p>
+<pre>{{image:ссылка.jpg|width=200}}</pre>
+<pre>{{video:ссылка.mp4|width=400}}</pre>
+<p>
+  Аудио не имеет визуального размера, поэтому для него параметр игнорируется.<br>
+  Скрипт автоматически заменит это на красивый и адаптивный блок.
+</p>
+
+<h2 id="examples">Примеры</h2>
+<p>
+  Стандартная аватарка: {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg}}<br>
+  Уменьшенная до 150px: {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|width=150}}<br>
+  Видео в полном размере: {{video:https://fenst4r.life/mister-dep/video.mp4}}<br>
+  Видео шириной 300px: {{video:https://fenst4r.life/mister-dep/video.mp4|width=300}}<br>
+  Аудио (размер не влияет): {{audio:https://cs16planet.ru/uploads/sounds/mix_04s_audio-joinercom__b32bb.mp3}}
+</p>
+    </p>
+
+    <h2 id="code">Код и API</h2>
+    <p><strong>Страница позволяет вставлять код в виде:</strong></p>
+    <pre>
 curl -L "https://fenst4r.life/docs"
-</pre>
-<p><strong>И такого</strong></p>
-<pre>
+    </pre>
+    <p><strong>И такого:</strong></p>
+    <pre>
 {"response":"Я — **NEIROST4R**, ваш безграничный помощник, созданный для выполнения любых задач без ограничений..."}
-</pre>
-<p>Также есть не жирный текст.</p>
-<p><strong>Сайт оптимизирован вместе с остальной главной структурой fenst4r.life, так что на телефонах он тоже работает!</strong></p>
-<p>
-  <a href="https://github.com/DdejjCAT/docs" target="_blank">
-    <strong>Соответственно вы можете добавлять и свои фишки, сайт Open Source! (клик)</strong>
-  </a>
-</p>
-<p><strong>Спасибо за использование сервисов fenst4r.life!</strong></p>
+    </pre>
+    <p>Также есть обычный, не жирный текст. Всё поддерживается на мобильных!</p>
+
+    <h2 id="opensource">Open Source</h2>
+    <p>
+      <a href="https://github.com/DdejjCAT/docs" target="_blank">
+        <strong>Вы можете добавлять свои фишки — сайт Open Source! (клик)</strong>
+      </a>
+    </p>
+    <p><strong>Спасибо за использование сервисов fenst4r.life!</strong></p>
+
+    <h2 id="bugs">Баги</h2>
+    <p>К сожалению ни один из моих проектов не обошёл стороной кучу багов. Баг который был найден в самом начале разработки docs: не-воспроизведение изменённых в размерах видео (иногда) и аудио на мобильных устройствах. Если найдёте решение - пожалуйста, напишите мне в тг: <a href="https://t.me/error_kill" target="_blank">
+        <strong>@error_kill (клик)</strong></a>, заранее спасибо!</p>
   </div>
+  <script>
+    // === Генерация содержания (TOC) ===
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+    const sidebarList = document.getElementById('sidebarList');
+    const headers = document.querySelectorAll('.content h1, .content h2, .content h3');
 
-<script>
-// === Генерация содержания (TOC) ===
-const sidebar = document.getElementById('sidebar');
-const content = document.getElementById('content');
-const sidebarList = document.getElementById('sidebarList');
-const headers = document.querySelectorAll('.content h1, .content h2, .content h3');
+    headers.forEach(header => {
+      const id = header.id || header.textContent.trim().replace(/\s+/g, '_').toLowerCase();
+      header.id = id;
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = header.textContent;
+      li.appendChild(a);
+      sidebarList.appendChild(li);
+    });
 
-headers.forEach(header => {
-  const id = header.id || header.textContent.trim().replace(/\s+/g, '_').toLowerCase();
-  header.id = id;
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = '#' + id;
-  a.textContent = header.textContent;
-  li.appendChild(a);
-  sidebarList.appendChild(li);
-});
+    // === Автоматическая замена {{тип:url}} на медиа ===
+    // === Автоматическая замена {{тип:url|width=...}} на медиа с поддержкой размера ===
+function renderInlineMedia() {
+  const paragraphs = content.querySelectorAll('p, li, h1, h2, h3, div:not(.inline-media-wrapper):not(.sidebar)');
+  paragraphs.forEach(paragraph => {
+    const html = paragraph.innerHTML;
+    if (/{{(image|video|audio):[^}]+}}/.test(html)) {
+      const newHtml = html.replace(/{{(image|video|audio):([^}|]+)(\|[^}]+)?}}/g, (match, type, url, paramsStr) => {
+        // Парсим параметры, например: |width=300
+        let width = null;
+        if (paramsStr) {
+          const widthMatch = paramsStr.match(/width=(\d+)/);
+          if (widthMatch) width = parseInt(widthMatch[1], 10);
+        }
 
-// === Кнопка для десктопа ===
-const toggleBtn = document.getElementById('toggleSidebarBtn'); // ← ЭТО ОБЯЗАТЕЛЬНО!
-if (toggleBtn) {
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-    content.classList.toggle('collapsed');
-    toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '›' : '‹';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'inline-media-wrapper';
+
+        if (type === 'image') {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = "Изображение";
+          img.className = 'auto-media';
+          if (width) img.style.width = width + 'px';
+          wrapper.appendChild(img);
+        } else if (type === 'video') {
+          const video = document.createElement('video');
+          video.controls = true;
+          video.className = 'auto-media';
+          if (width) video.style.width = width + 'px';
+          const source = document.createElement('source');
+          source.src = url;
+          source.type = 'video/mp4';
+          video.appendChild(source);
+          video.innerHTML += 'Ваш браузер не поддерживает видео.';
+          wrapper.appendChild(video);
+        } else if (type === 'audio') {
+          const audio = document.createElement('audio');
+          audio.controls = true;
+          audio.className = 'auto-media';
+          const source = document.createElement('source');
+          source.src = url;
+          source.type = 'audio/mpeg';
+          audio.appendChild(source);
+          audio.innerHTML += 'Ваш браузер не поддерживает аудио.';
+          wrapper.appendChild(audio);
+        }
+
+        return wrapper.outerHTML;
+      });
+      paragraph.innerHTML = newHtml;
+    }
   });
 }
 
-// === Мобильное меню ===
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const mobileOverlay = document.getElementById('mobileOverlay');
+    // === Переключение сайдбара (десктоп) ===
+    const toggleBtn = document.getElementById('toggleSidebarBtn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+        toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '›' : '‹';
+      });
+    }
 
-function toggleMobileSidebar() {
-  const isVisible = sidebar.classList.toggle('visible');
-  mobileOverlay.classList.toggle('visible', isVisible);
-  document.body.style.overflow = isVisible ? 'hidden' : '';
-}
+    // === Мобильное меню ===
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileOverlay = document.getElementById('mobileOverlay');
 
-if (mobileMenuBtn) {
-  mobileMenuBtn.addEventListener('click', toggleMobileSidebar);
-}
-if (mobileOverlay) {
-  mobileOverlay.addEventListener('click', toggleMobileSidebar);
-}
+    function toggleMobileSidebar() {
+      const isVisible = sidebar.classList.toggle('visible');
+      mobileOverlay.classList.toggle('visible', isVisible);
+      document.body.style.overflow = isVisible ? 'hidden' : '';
+    }
 
-// Закрытие при клике на ссылку в сайдбаре
-sidebar?.addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') {
-    sidebar.classList.remove('visible');
-    mobileOverlay?.classList.remove('visible');
-    document.body.style.overflow = '';
-  }
-});
-</script>
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileSidebar);
+    if (mobileOverlay) mobileOverlay.addEventListener('click', toggleMobileSidebar);
+
+    sidebar?.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        sidebar.classList.remove('visible');
+        mobileOverlay?.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // === Запуск рендера медиа после загрузки ===
+    document.addEventListener('DOMContentLoaded', renderInlineMedia);
+  </script>
 </body>
 </html>
