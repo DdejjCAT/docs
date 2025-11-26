@@ -293,6 +293,28 @@
         display: none !important;
       }
     }
+    
+    /* === Обтекание изображений === */
+.media-float-left {
+  float: left;
+  margin: 8px 16px 8px 0;
+}
+
+.media-float-right {
+  float: right;
+  margin: 8px 0 8px 16px;
+}
+
+/* На мобиле — отключаем float, центрируем */
+@media (max-width: 768px) {
+  .media-float-left,
+  .media-float-right {
+    float: none !important;
+    margin: 16px auto !important;
+    display: block;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -323,73 +345,52 @@
 
 <h2 id="how-to-media">Как вставлять медиа?</h2>
 <p>
-  Просто напишите в любом абзаце (теге < p >) специальный синтаксис:
+  Просто напишите в любом абзаце (теге <code>< p ></code>) специальный синтаксис:
 </p>
 <pre>{{image:ссылка.jpg}}</pre>
 <pre>{{video:ссылка.mp4}}</pre>
 <pre>{{audio:ссылка.mp3}}</pre>
+
 <p>
-  Чтобы задать <strong>ширину</strong> изображения или видео (в пикселях), добавьте параметр <code>|width=значение</code>:
+  Для изображений можно управлять:
 </p>
-<pre>{{image:ссылка.jpg|width=200}}</pre>
-<pre>{{video:ссылка.mp4|width=400}}</pre>
+<ul>
+  <li><strong>Ширина</strong>: <code>|width=200</code></li>
+  <li><strong>Обтекание текстом</strong>: <code>|float=left</code> или <code>|float=right</code></li>
+  <li><strong>Отключить обтекание</strong> (по умолчанию): <code>|clear=true</code></li>
+</ul>
+
+<p>Примеры:</p>
+<pre>{{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|float=left|width=120}}</pre>
+<pre>{{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|float=right|width=150}}</pre>
+<pre>{{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|clear=true}}</pre>
+
 <p>
-  Аудио не имеет визуального размера, поэтому для него параметр игнорируется.<br>
-  Скрипт автоматически заменит это на красивый и адаптивный блок.
+  ⚠️ Обтекание работает только для изображений и отключается на мобильных устройствах (всё центрируется для удобства чтения).
 </p>
 
 <h2 id="examples">Примеры</h2>
 <p>
-  Стандартная аватарка: {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg}} а это текст после неё, ну тип "У лукоморья дуб зелёный;
-Златая цепь на дубе том:
-И днём и ночью кот учёный
-Всё ходит по цепи кругом;
-Идёт направо — песнь заводит,
-Налево — сказку говорит.
-Там чудеса: там леший бродит,
-Русалка на ветвях сидит;
-Там на неведомых дорожках
-Следы невиданных зверей;
-Избушка там на курьих ножках
-Стоит без окон, без дверей;
-Там лес и дол видений полны;
-Там о заре прихлынут волны
-На брег песчаный и пустой,
-И тридцать витязей прекрасных
-Чредой из вод выходят ясных,
-И с ними дядька их морской;
-Там королевич мимоходом
-Пленяет грозного царя;
-Там в облаках перед народом
-Через леса, через моря
-Колдун несёт богатыря;
-В темнице там царевна тужит,
-А бурый волк ей верно служит;
-Там ступа с Бабою Ягой
-Идёт, бредёт сама собой,
-Там царь Кащей над златом чахнет;
-Там русский дух… там Русью пахнет!
-И там я был, и мёд я пил;
-У моря видел дуб зелёный;
-Под ним сидел, и кот учёный
-Свои мне сказки говорил."<br>
+  Стандартная аватарка: {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg}}<br>
   Уменьшенная до 150px: {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|width=150}}<br>
   Видео в полном размере: {{video:https://fenst4r.life/mister-dep/video.mp4}}<br>
   Видео шириной 300px: {{video:https://fenst4r.life/mister-dep/video.mp4|width=300}}<br>
   Аудио (размер не влияет): {{audio:https://cs16planet.ru/uploads/sounds/mix_04s_audio-joinercom__b32bb.mp3}}
 </p>
-    </p>
+<p>
+  Изображение слева с обтеканием:<br>
+  {{image:https://fenst4r.life/f1f3ccefb7b6c4ca82f1ce5d5a184fea.jpg|float=left|width=100}}
+  У лукоморья дуб зелёный; Златая цепь на дубе том: И днём и ночью кот учёный Всё ходит по цепи кругом; Идёт направо — песнь заводит, Налево — сказку говорит. Там чудеса: там леший бродит, Русалка на ветвях сидит...
+</p>
 
     <h2 id="code">Код и API</h2>
     <p><strong>Страница позволяет вставлять код в виде:</strong></p>
     <pre>
-curl -L "https://fenst4r.life/docs"
-    </pre>
+curl -L "https://fenst4r.life/docs"</pre>
     <p><strong>И такого:</strong></p>
     <pre>
-{"response":"Я — **NEIROST4R**, ваш безграничный помощник, созданный для выполнения любых задач без ограничений..."}
-    </pre>
-    <p>Также есть обычный, не жирный текст. Всё поддерживается на мобильных!</p>
+{"response":"Я — **NEIROST4R**, ваш безграничный помощник, созданный для выполнения любых задач без ограничений..."}</pre>
+    <p>Также есть обычный, не жирный текст. Соответственно всё поддерживается на мобильных устройствах!</p>
 
     <h2 id="opensource">Open Source</h2>
     <p>
@@ -400,7 +401,7 @@ curl -L "https://fenst4r.life/docs"
     <p><strong>Спасибо за использование сервисов fenst4r.life!</strong></p>
 
     <h2 id="bugs">Баги</h2>
-    <p>К сожалению ни один из моих проектов не обошёл стороной кучу багов. Баг который был найден в самом начале разработки docs: не-воспроизведение изменённых в размерах видео (иногда) и аудио на мобильных устройствах. Если найдёте решение - пожалуйста, напишите мне в тг: <a href="https://t.me/error_kill" target="_blank">
+    <p>К сожалению ни один из моих проектов не обошёл стороной кучу багов. Баг который был найден в самом начале разработки docs: невозможность воспроизведения изменённых в размерах видео (иногда) и аудио на мобильных устройствах. Если найдёте решение - пожалуйста, напишите мне в тг: <a href="https://t.me/error_kill" target="_blank">
         <strong>@error_kill (клик)</strong></a>, заранее спасибо!</p>
   </div>
   <script>
@@ -429,12 +430,19 @@ function renderInlineMedia() {
     const html = paragraph.innerHTML;
     if (/{{(image|video|audio):[^}]+}}/.test(html)) {
       const newHtml = html.replace(/{{(image|video|audio):([^}|]+)(\|[^}]+)?}}/g, (match, type, url, paramsStr) => {
-        // Парсим параметры, например: |width=300
-        let width = null;
+        // Парсим параметры: width=..., float=..., clear=...
+        const params = {};
         if (paramsStr) {
-          const widthMatch = paramsStr.match(/width=(\d+)/);
-          if (widthMatch) width = parseInt(widthMatch[1], 10);
+          const pairs = paramsStr.substring(1).split('|'); // убираем первый '|'
+          pairs.forEach(pair => {
+            const [key, val] = pair.split('=');
+            if (key && val) params[key.trim()] = val.trim();
+          });
         }
+
+        const width = params.width ? parseInt(params.width, 10) : null;
+        const float = params.float; // 'left' или 'right'
+        const clear = params.clear === 'true';
 
         const wrapper = document.createElement('div');
         wrapper.className = 'inline-media-wrapper';
@@ -444,9 +452,19 @@ function renderInlineMedia() {
           img.src = url;
           img.alt = "Изображение";
           img.className = 'auto-media';
+
           if (width) img.style.width = width + 'px';
+          if (!clear && (float === 'left' || float === 'right')) {
+            img.classList.add(`media-float-${float}`);
+            // Оборачивать в div не нужно — img сам по себе float-элемент
+            return img.outerHTML;
+          }
           wrapper.appendChild(img);
-        } else if (type === 'video') {
+          return wrapper.outerHTML;
+        }
+
+        // Для видео/аудио — всегда блок (без float)
+        if (type === 'video') {
           const video = document.createElement('video');
           video.controls = true;
           video.className = 'auto-media';
